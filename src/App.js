@@ -31,6 +31,28 @@ function App() {
   const [ slideTimer, setSlideTimer ] = useState(null)
   const [ slideDuration ] = useState(3000)
 
+  const switchImage = (data)=>{
+    console.log('data', data)
+       switch(data.type){
+         case 'next':
+          if(activeIndex < catalogsList.length-1){
+            setActiveIndex(activeIndex+1)
+          }else{
+            setActiveIndex(0)
+          }
+            break;
+         case 'prev':
+           if(activeIndex > 0){
+             setActiveIndex(activeIndex-1);
+           }else{
+             setActiveIndex(catalogsList.length-1)
+           }
+           break;
+         default:
+           setActiveIndex(data.index)
+       }
+  }
+
   return (
     <Fragment>
       <h8k-navbar header={ title }></h8k-navbar>
@@ -40,16 +62,19 @@ function App() {
             <Viewer catalogImage={ catalogs[activeIndex].image } />
             <div className='layout-row justify-content-center align-items-center mt-20'>
             <button 
+              onClick={()=>switchImage({type:'prev'})}
               className="icon-only outlined"
               data-testid="prev-slide-btn"
             >
               <i className="material-icons">arrow_back</i>
             </button>
               <Thumbs 
+                switchImage={(index)=>switchImage({index})}
                 items={ catalogs } 
                 currentIndex={ activeIndex } 
               />
             <button 
+            onClick={()=>switchImage({type:'next'})}
               className="icon-only outlined"
               data-testid="next-slide-btn"
             >

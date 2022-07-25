@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 
-function Thumbs({ items, currentIndex }) {
+function Thumbs({ items, currentIndex, switchImage }) {
     
     return (
         <Fragment>
@@ -12,6 +12,7 @@ function Thumbs({ items, currentIndex }) {
                         data-testid={'thumb-button-' + idx}
                     >
                         <span 
+                          onClick={()=>switchImage(idx)}
                             className={'inline-flex w-90 pa-4 image-thumb ' + 
                                 (idx === currentIndex ? 'thumb-selected' : '')} 
                         >
