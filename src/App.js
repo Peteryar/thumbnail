@@ -28,8 +28,6 @@ function App() {
 
   const [catalogs] = useState([...catalogsList])
   const [activeIndex, setActiveIndex] = useState(0)
-  const [slideTimer, setSlideTimer] = useState(false)
-  const [slideDuration] = useState(3000)
 
   const switchImage = (data) => {
     switch (data.type) {
