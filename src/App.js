@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useEffect, useState, useCallback } from 'react'
 import 'h8k-components'
 
 import { image1, image2, image3, image4 } from './assets/images'
@@ -28,10 +28,14 @@ function App() {
 
   const [catalogs] = useState([...catalogsList])
   const [activeIndex, setActiveIndex] = useState(0)
+  const [slideTimer, setSlideTimer] = useState(null)
+  const [slideDuration] = useState(3000);
 
   const switchImage = (data) => {
+    console.log('data', data)
     switch (data.type) {
       case 'next':
+        setActiveIndex(activeIndex + 1)
         if (activeIndex < catalogsList.length - 1) {
           setActiveIndex(activeIndex + 1)
         } else {
@@ -47,6 +51,25 @@ function App() {
         break;
       default:
         setActiveIndex(data.index)
+    }
+  }
+
+  let counter = 0;
+  const startSlideShow = (e) => {
+    if (e.target.checked) {
+      setSlideTimer(setInterval(() => {
+        if (counter < catalogsList.length - 1) {
+          switchImage({ index: counter + 1 })
+          counter += 1
+        } else {
+          switchImage({ index: 0 })
+          counter = 0;
+        }
+      }, slideDuration))
+    } else {
+      clearInterval(slideTimer);
+      setSlideTimer(null);
+      counter = activeIndex;
     }
   }
 
@@ -82,6 +105,7 @@ function App() {
         </div>
         <div className='layout-row justify-content-center mt-25'>
           <input
+            onClick={startSlideShow}
             type='checkbox'
             data-testid='toggle-slide-show-button'
           />
