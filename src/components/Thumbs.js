@@ -10,9 +10,9 @@ function Thumbs({ items, currentIndex, switchImage }) {
                         id={idx} 
                         key={idx} 
                         data-testid={'thumb-button-' + idx}
+                        onClick={()=>switchImage(idx)}
                     >
                         <span 
-                          onClick={()=>switchImage(idx)}
                             className={'inline-flex w-90 pa-4 image-thumb ' + 
                                 (idx === currentIndex ? 'thumb-selected' : '')} 
                         >
